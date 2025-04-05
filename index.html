@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AH Homes & Hardware - Products</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f2f2f2;
+    }
+    header {
+      background-color: #222;
+      color: white;
+      padding: 1rem;
+      text-align: center;
+    }
+    .container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      padding: 2rem;
+    }
+    .product {
+      background: white;
+      padding: 1rem;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+    .product img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 8px;
+    }
+    .product h3 {
+      margin: 0.5rem 0;
+    }
+    .product button {
+      background-color: #28a745;
+      color: white;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .cart {
+      background: white;
+      padding: 1rem;
+      position: fixed;
+      right: 0;
+      top: 0;
+      width: 300px;
+      height: 100vh;
+      overflow-y: auto;
+      box-shadow: -3px 0 5px rgba(0,0,0,0.1);
+    }
+    .cart h2 {
+      text-align: center;
+    }
+    .cart ul {
+      list-style: none;
+      padding: 0;
+    }
+    .cart ul li {
+      padding: 0.5rem 0;
+      border-bottom: 1px solid #ccc;
+    }
+    .checkout {
+      background-color: #007bff;
+      color: white;
+      padding: 0.7rem;
+      border: none;
+      width: 100%;
+      margin-top: 1rem;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>AH Homes & Hardware</h1>
+    <p>Stylish Products for Your Home</p>
+  </header>
+
+  <div class="container" id="product-list">
+    <!-- Products will be inserted here by JS -->
+  </div>
+
+  <div class="cart">
+    <h2>Your Cart</h2>
+    <ul id="cart-items"></ul>
+    <button class="checkout" onclick="checkout()">Checkout</button>
+  </div>
+
+  <script>
+    const products = [
+      {
+        name: "Luxury Lamp",
+        price: 12000,
+        image: "https://via.placeholder.com/300x200?text=Lamp"
+      },
+      {
+        name: "Modern Chair",
+        price: 18000,
+        image: "https://via.placeholder.com/300x200?text=Chair"
+      },
+      {
+        name: "Stylish Table",
+        price: 25000,
+        image: "https://via.placeholder.com/300x200?text=Table"
+      }
+    ];
+
+    const cart = [];
+
+    const productList = document.getElementById("product-list");
+
+    products.forEach((product, index) => {
+      const div = document.createElement("div");
+      div.className = "product";
+      div.innerHTML = `
+        <img src="${product.image}" alt="${product.name}" />
+        <h3>${product.name}</h3>
+        <p>Price: Rs ${product.price}</p>
+        <button onclick="addToCart(${index})">Add to Cart</button>
+      `;
+      productList.appendChild(div);
+    });
+
+    function addToCart(index) {
+      cart.push(products[index]);
+      updateCart();
+    }
+
+    function updateCart() {
+      const cartItems = document.getElementById("cart-items");
+      cartItems.innerHTML = "";
+      cart.forEach((item, i) => {
+        const li = document.createElement("li");
+        li.innerText = `${item.name} - Rs ${item.price}`;
+        cartItems.appendChild(li);
+      });
+    }
+
+    function checkout() {
+      if (cart.length === 0) {
+        alert("Cart is empty!");
+      } else {
+        alert("Thank you for your order! Your cart total is Rs " + cart.reduce((acc, item) => acc + item.price, 0));
+      }
+    }
+  </script>
+</body>
+</html>
